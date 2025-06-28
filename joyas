@@ -1,1 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin bio Care - Tienda Bioaqua</title>
+    <!-- CDN de Tailwind CSS para prototipado rápido -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fuente Inter de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos globales para la fuente y animaciones */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Animación para la notificación */
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(-20px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        .animate-fade-in-out {
+            animation: fadeInOut 3s ease-in-out forwards;
+        }
+
+        /* Estilos para el scrollbar en Webkit (Chrome, Safari) */
+        .overflow-y-auto::-webkit-scrollbar {
+            width: 8px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+            background: #e879f9; /* Tailwind pink-400 */
+            border-radius: 10px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+            background: #d946ef; /* Tailwind pink-500 */
+        }
+
+        /* Nueva animación de pulso para el botón del carrito */
+        @keyframes pulse-attention {
+            0% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 0 0 0px rgba(236, 72, 153, 0.7); } /* pink-500 with opacity */
+            50% { transform: scale(1.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(236, 72, 153, 0); }
+            100% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 0 0 0px rgba(236, 72, 153, 0.7); }
+        }
+
+        .animate-pulse-attention {
+            animation: pulse-attention 2s infinite;
+        }
+
+        /* Nueva animación de agitación para el botón del carrito al añadir ítems */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
+        }
+
+        .animate-shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+    </style>
+</head>
+<body class="bg-pink-50 min-h-screen font-sans">
+
+    <!-- Header Principal de la Aplicación -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo de la Empresa -->
+                <div class="flex items-center gap-2">
+                    <!-- Icono de hoja SVG para el tema 'bio' y natural -->
+                    <svg class="w-8 h-8 text-pink-500" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66C7.32 17.06 9.71 12 17 10V8Z" />
+                        <path d="M17 8C14.84 3.93 10.23.47 5.6 0L4.22 1.53C8.83 2.5 13.5 6.44 15.22 10.53L17 8Z" />
+                    </svg>
+                    <!-- Tipografía profesional combinando pesos y estilos -->
+                    <h1 class="text-2xl md:text-3xl text-gray-800 tracking-tight">
+                        <span class="font-light">Skin</span>
+                        <span class="font-serif italic text-pink-600">bio</span>
+                        <span class="font-light">Care</span>
+                    </h1>
+                </div>
+                <!-- Botón para abrir el carrito de compras -->
+                <!-- Estilo mejorado y animaciones -->
+                <button id="openCartBtn" class="relative p-4 rounded-full bg-pink-600 text-white hover:bg-pink-700 transition-colors shadow-lg animate-pulse-attention" aria-label="Abrir carrito de compras">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57L22 4H5.5"/></svg>
+                    <!-- Contador de ítems en el carrito, ahora más grande y visible -->
+                    <span id="cartItemCount" class="absolute -top-1 -right-1 hidden h-8 w-8 rounded-full bg-pink-800 text-white text-base flex items-center justify-center font-bold border-2 border-white">
+                        0
+                    </span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Notificación Flotante (se mostrará con JavaScript) -->
+    <div id="notification" class="fixed top-20 left-1/2 -translate-x-1/2 p-4 px-6 rounded-lg shadow-lg text-white font-medium z-50 opacity-0 transition-opacity duration-300">
+        <!-- El mensaje y el tipo de notificación se añadirán con JS -->
+    </div>
+
+    <!-- Contenido Principal: Título y Grid de Productos -->
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 leading-tight">Nuestros Productos Bioaqua</h2>
+            <p class="text-gray-600 mt-3 text-lg">Cuida tu piel con lo mejor de la naturaleza y la ciencia.</p>
+        </div>
+
+        <!-- Grid de Productos (se rellenará con JavaScript) -->
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 xl:gap-8">
+            <!-- Las tarjetas de producto se insertarán aquí con JS -->
+        </div>
+    </main>
+
+    <!-- Pie de Página -->
+    <footer class="bg-white mt-16 py-8 shadow-inner">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+            <p>&copy; <span id="currentYear"></span> Skin bio Care. Todos los derechos reservados.</p>
+            <p class="text-sm mt-2">Tu tienda de confianza para productos de cuidado de la piel.</p>
+        </div>
+    </footer>
+
+    <!-- Overlay Oscuro cuando el Carrito está Abierto -->
+    <div id="cartOverlay" class="fixed inset-0 bg-black/40 z-40 opacity-0 hidden transition-opacity duration-300"></div>
+
+    <!-- Carrito de Compras (Sidebar) -->
+    <div id="shoppingCartSidebar" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 flex flex-col rounded-l-lg">
+        <!-- Encabezado del Carrito -->
+        <div class="flex justify-between items-center p-4 border-b">
+            <h2 class="text-xl font-bold text-gray-800">Carrito de Compras</h2>
+            <button id="closeCartBtn" class="text-gray-500 hover:text-gray-800 p-2 rounded-full hover:bg-gray-100 transition-colors" aria-label="Cerrar carrito">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        </div>
+
+        <!-- Cuerpo del Carrito: Contenedor para el mensaje de vacío y los ítems -->
+        <div class="flex-grow overflow-y-auto p-4 flex flex-col">
+            <div id="emptyCartMessage" class="flex flex-col items-center justify-center h-full text-center text-gray-500 hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart mb-4 text-pink-300"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57L22 4H5.5"/></svg>
+                <p class="text-lg font-medium">Tu carrito está vacío</p>
+                <p class="text-sm">Agrega productos para verlos aquí.</p>
+            </div>
+            <div id="cartItemsContainer" class="flex-grow">
+                <!-- Los ítems del carrito se insertarán aquí con JS -->
+            </div>
+        </div>
+
+        <!-- Pie de página del Carrito: Resumen de Compra y Cupón -->
+        <div id="cartFooter" class="p-4 border-t border-gray-200 bg-gray-50 rounded-bl-lg rounded-br-lg hidden">
+            <!-- Sección de Cupón -->
+            <div class="flex items-center gap-2 mb-4">
+                <input type="text" id="couponInput" placeholder="CUPÓN DE DESCUENTO" class="flex-grow p-3 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-pink-300 focus:border-pink-400 outline-none" aria-label="Introduce tu cupón de descuento">
+                <button id="applyCouponBtn" class="bg-gray-700 text-white px-5 py-3 rounded-md hover:bg-gray-800 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-500">
+                    Aplicar
+                </button>
+            </div>
+            
+            <!-- Resumen de Compra -->
+            <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex justify-between">
+                    <span>Subtotal:</span>
+                    <span id="subtotalDisplay" class="font-medium">S/ 0.00</span>
+                </div>
+                <div id="discountRow" class="flex justify-between text-green-600 font-semibold hidden">
+                    <span>Descuento (<span id="appliedCouponCode"></span>):</span>
+                    <span id="discountDisplay">- S/ 0.00</span>
+                </div>
+                <div class="flex justify-between text-lg font-bold border-t border-gray-200 pt-3 mt-3 text-gray-800">
+                    <span>Total:</span>
+                    <span id="totalDisplay" class="text-pink-600">S/ 0.00</span>
+                </div>
+            </div>
+
+            <!-- Botón de Finalizar Compra -->
+            <button id="checkoutBtn" class="w-full mt-6 bg-pink-500 text-white font-bold py-3.5 rounded-lg hover:bg-pink-600 transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-opacity-75">
+                Finalizar Compra
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- Datos de Ejemplo: Productos Bioaqua ---
+        // En una aplicación real, esto vendría de una base de datos o una API.
+        const sampleProducts = [
+            { id: 1, name: "Sérum de Arroz Bioaqua", price: 15.00, imageUrl: "https://placehold.co/400x400/FDF4F5/333?text=S%C3%A9rum+de+Arroz", description: "Hidratante y aclarante, ideal para unificar el tono de la piel." },
+            { id: 2, name: "Mascarilla de Velo con Ácido Hialurónico", price: 3.50, imageUrl: "https://placehold.co/400x400/FDF4F5/333?text=Mascarilla+de+Velo", description: "Hidratación profunda para una piel suave y radiante al instante." },
+            { id: 3, name: "Crema Hidratante de Durazno", price: 18.00, imageUrl: "https://placehold.co/400x400/FDF4F5/333?text=Crema+de+Durazno", description: "Aporta elasticidad y un aroma delicioso a tu piel." },
+            { id: 4, name: "Contorno de Ojos con Cafeína", price: 12.50, imageUrl: "https://placehold.co/400x400/FDF4F5/333?text=Contorno+de+Ojos", description: "Reduce la apariencia de ojeras y bolsas para una mirada fresca." },
+            { id: 5, name: "Limpiador Facial de Aminoácidos", price: 14.00, imageUrl: "https://placehold.co/400x400/FDF4F5/333?text=Limpiador+Facial", description: "Limpieza suave que no reseca, perfecta para todo tipo de piel." },
+            { id: 6, name: "Tónico Facial de Rosas", price: 16.00, imageUrl: "https://placehold.co/400x400/FDF4F5/333?text=T%C3%B3nico+de+Rosas", description: "Calma, refresca y equilibra el pH de la piel después de la limpieza." },
+            { id: 7, name: "Protector Solar SPF 50+", price: 22.00, imageUrl: "https://placehold.co/400x400/FDF4F5/333?text=Protector+Solar", description: "Alta protección contra los rayos UVA/UVB sin sensación grasosa." },
+            { id: 8, name: "Exfoliante de Arroz", price: 11.50, imageUrl: "https://placehold.co/400x400/FDF4F5/333?text=Exfoliante", description: "Elimina células muertas y revela una piel más luminosa y suave." },
+        ];
+
+        // --- Cupones de Descuento Válidos ---
+        const validCoupons = {
+            'BIENVENIDO10': { type: 'percentage', value: 10 },
+            'SKINCARE5': { type: 'fixed', value: 5.00 },
+            'BIOAQUA20': { type: 'percentage', value: 20 },
+        };
+
+        // --- Estado Global de la Aplicación ---
+        let cart = []; // Array para almacenar los ítems en el carrito
+        let currentCoupon = ''; // Almacena el código del cupón aplicado
+        let notificationTimeout; // Para limpiar el timeout de notificaciones
+
+        // --- Referencias a Elementos del DOM ---
+        const productGrid = document.getElementById('productGrid');
+        const openCartBtn = document.getElementById('openCartBtn');
+        const closeCartBtn = document.getElementById('closeCartBtn');
+        const shoppingCartSidebar = document.getElementById('shoppingCartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartItemCountDisplay = document.getElementById('cartItemCount');
+        // Referencia al contenedor de ítems del carrito (donde se añadirán los productos)
+        const cartItemsContainer = document.getElementById('cartItemsContainer'); 
+        // Referencia al mensaje de carrito vacío (ahora un hermano del contenedor de ítems)
+        const emptyCartMessage = document.getElementById('emptyCartMessage'); 
+        const cartFooter = document.getElementById('cartFooter');
+        const couponInput = document.getElementById('couponInput');
+        const applyCouponBtn = document.getElementById('applyCouponBtn');
+        const subtotalDisplay = document.getElementById('subtotalDisplay');
+        const discountRow = document.getElementById('discountRow');
+        const appliedCouponCodeDisplay = document.getElementById('appliedCouponCode');
+        const discountDisplay = document.getElementById('discountDisplay');
+        const totalDisplay = document.getElementById('totalDisplay');
+        const notificationElement = document.getElementById('notification');
+        const currentYearDisplay = document.getElementById('currentYear');
+
+        // --- Funciones de Lógica del Carrito y UI ---
+
+        /**
+         * Muestra una notificación temporal al usuario.
+         * @param {string} message - El mensaje a mostrar.
+         * @param {string} type - El tipo de notificación ('success', 'error', 'info').
+         */
+        function showNotification(message, type) {
+            clearTimeout(notificationTimeout); // Limpia cualquier notificación anterior
+            notificationElement.textContent = message;
+            notificationElement.className = `fixed top-20 left-1/2 -translate-x-1/2 p-4 px-6 rounded-lg shadow-lg text-white font-medium z-50 animate-fade-in-out`;
+            
+            // Aplica la clase de color según el tipo
+            if (type === 'success') {
+                notificationElement.classList.add('bg-green-500');
+            } else if (type === 'error') {
+                notificationElement.classList.add('bg-red-500');
+            } else if (type === 'info') {
+                notificationElement.classList.add('bg-blue-500');
+            }
+
+            notificationElement.style.opacity = '1'; // Asegura que esté visible al inicio de la animación
+
+            // Oculta la notificación después de 3 segundos
+            notificationTimeout = setTimeout(() => {
+                notificationElement.style.opacity = '0';
+                // Espera a que termine la transición de opacidad antes de quitar las clases de color
+                setTimeout(() => {
+                    notificationElement.className = `fixed top-20 left-1/2 -translate-x-1/2 p-4 px-6 rounded-lg shadow-lg text-white font-medium z-50 opacity-0 transition-opacity duration-300`;
+                }, 300); // Duración de la transición de opacidad
+            }, 3000);
+        }
+
+        /**
+         * Abre o cierra el sidebar del carrito.
+         * @param {boolean} open - true para abrir, false para cerrar.
+         */
+        function toggleCart(open) {
+            if (open) {
+                shoppingCartSidebar.classList.remove('translate-x-full');
+                shoppingCartSidebar.classList.add('translate-x-0');
+                cartOverlay.classList.remove('hidden', 'opacity-0');
+                cartOverlay.classList.add('opacity-100');
+            } else {
+                shoppingCartSidebar.classList.remove('translate-x-0');
+                shoppingCartSidebar.classList.add('translate-x-full');
+                cartOverlay.classList.remove('opacity-100');
+                cartOverlay.classList.add('opacity-0');
+                // Oculta el overlay completamente después de la transición
+                setTimeout(() => {
+                    cartOverlay.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        /**
+         * Actualiza el contador de ítems en el icono del carrito.
+         */
+        function updateCartCount() {
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartItemCountDisplay.textContent = totalCount;
+            if (totalCount > 0) {
+                cartItemCountDisplay.classList.remove('hidden');
+                // Cuando hay ítems en el carrito, quitamos la animación de pulso
+                // openCartBtn.classList.remove('animate-pulse-attention'); // Descomentar si quieres que la animación se detenga al añadir
+            } else {
+                cartItemCountDisplay.classList.add('hidden');
+                // Cuando el carrito está vacío, aseguramos que la animación de pulso esté activa
+                // openCartBtn.classList.add('animate-pulse-attention'); // Descomentar si quieres que la animación se reinicie al vaciar
+            }
+        }
+
+        /**
+         * Calcula y actualiza los subtotales, descuentos y totales.
+         */
+        function calculateTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            let discount = 0;
+
+            if (currentCoupon && validCoupons[currentCoupon]) {
+                const couponData = validCoupons[currentCoupon];
+                if (couponData.type === 'percentage') {
+                    discount = (subtotal * couponData.value) / 100;
+                } else if (couponData.type === 'fixed') {
+                    discount = couponData.value;
+                }
+            }
+
+            const total = Math.max(subtotal - discount, 0);
+
+            subtotalDisplay.textContent = `S/ ${subtotal.toFixed(2)}`;
+            totalDisplay.textContent = `S/ ${total.toFixed(2)}`;
+
+            if (discount > 0) {
+                appliedCouponCodeDisplay.textContent = currentCoupon;
+                discountDisplay.textContent = `- S/ ${discount.toFixed(2)}`;
+                discountRow.classList.remove('hidden');
+            } else {
+                discountRow.classList.add('hidden');
+            }
+        }
+
+        /**
+         * Renderiza (o re-renderiza) los ítems en el carrito.
+         */
+        function renderCart() {
+            // Limpia el contenedor de ítems antes de re-renderizar
+            cartItemsContainer.innerHTML = ''; 
+
+            if (cart.length === 0) {
+                // Si el carrito está vacío, muestra el mensaje y oculta el footer
+                emptyCartMessage.classList.remove('hidden');
+                cartItemsContainer.classList.add('hidden'); // Oculta el contenedor de ítems
+                cartFooter.classList.add('hidden');
+            } else {
+                // Si hay ítems, oculta el mensaje de vacío y muestra el footer
+                emptyCartMessage.classList.add('hidden');
+                cartItemsContainer.classList.remove('hidden'); // Muestra el contenedor de ítems
+                cartFooter.classList.remove('hidden');
+                
+                cart.forEach(item => {
+                    const cartItemDiv = document.createElement('div');
+                    cartItemDiv.className = 'flex items-center gap-4 p-3 border border-gray-200 rounded-lg bg-white shadow-sm';
+                    cartItemDiv.innerHTML = `
+                        <img src="${item.imageUrl}" alt="${item.name}" class="w-20 h-20 object-cover rounded-md flex-shrink-0"/>
+                        <div class="flex-grow">
+                            <p class="font-semibold text-base text-gray-800">${item.name}</p>
+                            <p class="text-pink-600 text-sm mt-1">S/ ${item.price.toFixed(2)}</p>
+                            <!-- Controles de Cantidad -->
+                            <div class="flex items-center gap-2 mt-2">
+                                <button class="quantity-btn minus-btn p-1 rounded-full border border-gray-300 text-gray-600 hover:bg-pink-100 hover:border-pink-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" data-product-id="${item.id}" aria-label="Disminuir cantidad de ${item.name}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus"><path d="M5 12h14"/></svg>
+                                </button>
+                                <span class="text-base font-medium text-gray-800 min-w-[24px] text-center">${item.quantity}</span>
+                                <button class="quantity-btn plus-btn p-1 rounded-full border border-gray-300 text-gray-600 hover:bg-pink-100 hover:border-pink-300 transition-colors" data-product-id="${item.id}" aria-label="Aumentar cantidad de ${item.name}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Precio total por artículo y botón de eliminar -->
+                        <div class="flex flex-col items-end flex-shrink-0">
+                            <p class="font-bold text-lg text-pink-700">S/ ${(item.price * item.quantity).toFixed(2)}</p>
+                            <button class="remove-from-cart-btn text-gray-400 hover:text-red-500 mt-2 p-1 rounded-full hover:bg-red-50 transition-colors" data-product-id="${item.id}" aria-label="Eliminar ${item.name} del carrito">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                            </button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItemDiv);
+
+                    // Añadir event listeners a los botones de cantidad y eliminar recién creados
+                    cartItemDiv.querySelector('.minus-btn').addEventListener('click', (e) => {
+                        const id = parseInt(e.currentTarget.dataset.productId);
+                        updateQuantity(id, item.quantity - 1);
+                    });
+                    cartItemDiv.querySelector('.plus-btn').addEventListener('click', (e) => {
+                        const id = parseInt(e.currentTarget.dataset.productId);
+                        updateQuantity(id, item.quantity + 1);
+                    });
+                    cartItemDiv.querySelector('.remove-from-cart-btn').addEventListener('click', (e) => {
+                        const id = parseInt(e.currentTarget.dataset.productId);
+                        removeFromCart(id);
+                    });
+                     // Deshabilitar botón de menos si la cantidad es 1
+                    if (item.quantity <= 1) {
+                        cartItemDiv.querySelector('.minus-btn').disabled = true;
+                    }
+                });
+            }
+            updateCartCount();
+            calculateTotals();
+        }
+
+        /**
+         * Añade un producto al carrito.
+         * @param {object} productToAdd - El objeto producto a añadir.
+         */
+        function addToCart(productToAdd) {
+            const existingProductIndex = cart.findIndex(item => item.id === productToAdd.id);
+
+            if (existingProductIndex !== -1) {
+                // Si el producto ya existe, incrementa la cantidad
+                cart[existingProductIndex].quantity++;
+                showNotification(`Cantidad de '${productToAdd.name}' actualizada.`, 'info');
+            } else {
+                // Si es un producto nuevo, lo añade con cantidad 1
+                cart.push({ ...productToAdd, quantity: 1 });
+                showNotification(`'${productToAdd.name}' fue agregado al carrito.`, 'success');
+            }
+            renderCart(); // Re-renderiza el carrito
+            toggleCart(true); // Abre el carrito
+
+            // Activa la animación de shake en el botón del carrito
+            openCartBtn.classList.remove('animate-shake'); // Reinicia la animación si ya estaba activa
+            void openCartBtn.offsetWidth; // Truco para forzar el reinicio de la animación CSS
+            openCartBtn.classList.add('animate-shake');
+        }
+
+        /**
+         * Actualiza la cantidad de un producto en el carrito.
+         * @param {number} productId - ID del producto a actualizar.
+         * @param {number} newQuantity - La nueva cantidad.
+         */
+        function updateQuantity(productId, newQuantity) {
+            if (newQuantity < 1) {
+                removeFromCart(productId);
+                return;
+            }
+            const itemIndex = cart.findIndex(item => item.id === productId);
+            if (itemIndex !== -1) {
+                cart[itemIndex].quantity = newQuantity;
+                renderCart(); // Re-renderiza el carrito
+            }
+        }
+
+        /**
+         * Elimina un producto del carrito.
+         * @param {number} productId - ID del producto a eliminar.
+         */
+        function removeFromCart(productId) {
+            const productToRemove = cart.find(item => item.id === productId);
+            cart = cart.filter(item => item.id !== productId);
+            showNotification(`'${productToRemove.name}' fue eliminado del carrito.`, 'info');
+            renderCart(); // Re-renderiza el carrito
+            if (cart.length === 0) { // Si el carrito queda vacío, lo cierra
+                toggleCart(false);
+            }
+        }
+
+        /**
+         * Aplica un cupón de descuento.
+         * @param {string} couponCode - El código del cupón a aplicar.
+         */
+        function applyCoupon(couponCode) {
+            if (validCoupons[couponCode]) {
+                currentCoupon = couponCode;
+                showNotification(`Cupón '${couponCode}' aplicado exitosamente.`, 'success');
+            } else {
+                currentCoupon = ''; // Limpia el cupón si no es válido
+                showNotification(`El cupón '${couponCode}' no es válido.`, 'error');
+            }
+            couponInput.value = currentCoupon; // Actualiza el input del cupón
+            calculateTotals(); // Recalcula los totales
+        }
+
+        // --- Inicialización de la Aplicación ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Establece el año actual en el footer
+            currentYearDisplay.textContent = new Date().getFullYear();
+
+            // Renderiza las tarjetas de productos
+            sampleProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col overflow-hidden';
+                productCard.innerHTML = `
+                    <div class="overflow-hidden rounded-t-lg">
+                        <img src="${product.imageUrl}" alt="Imagen de ${product.name}" class="w-full h-48 object-cover transform hover:scale-105 transition-transform duration-300" />
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2 truncate">${product.name}</h3>
+                        <p class="text-sm text-gray-500 mb-4 flex-grow">${product.description}</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <p class="text-xl font-bold text-pink-500">S/ ${product.price.toFixed(2)}</p>
+                            <button class="add-to-cart-btn bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-colors duration-300 text-sm font-medium flex items-center gap-2" data-product-id="${product.id}" aria-label="Agregar ${product.name} al carrito">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57L22 4H5.5"/></svg>
+                                <span>Agregar</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productGrid.appendChild(productCard);
+
+                // Añadir event listener al botón de "Agregar al Carrito"
+                productCard.querySelector('.add-to-cart-btn').addEventListener('click', (e) => {
+                    const productId = parseInt(e.currentTarget.dataset.productId);
+                    const product = sampleProducts.find(p => p.id === productId);
+                    if (product) {
+                        addToCart(product);
+                    }
+                });
+            });
+
+            // --- Event Listeners Globales ---
+            openCartBtn.addEventListener('click', () => toggleCart(true));
+            closeCartBtn.addEventListener('click', () => toggleCart(false));
+            cartOverlay.addEventListener('click', () => toggleCart(false));
+            applyCouponBtn.addEventListener('click', () => applyCoupon(couponInput.value.toUpperCase()));
+            couponInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    applyCoupon(couponInput.value.toUpperCase());
+                }
+            });
+
+            // Inicializa el carrito vacío
+            renderCart();
+        });
+    </script>
+</body>
+</html>
 
