@@ -88,15 +88,7 @@
                         <span class="font-light">Care</span>
                     </h1>
                 </div>
-                <!-- Botón para abrir el carrito de compras -->
-                <!-- Estilo mejorado y animaciones -->
-                <button id="openCartBtn" class="relative p-4 rounded-full bg-pink-600 text-white hover:bg-pink-700 transition-colors shadow-lg animate-pulse-attention" aria-label="Abrir carrito de compras">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57L22 4H5.5"/></svg>
-                    <!-- Contador de ítems en el carrito, ahora más grande y visible -->
-                    <span id="cartItemCount" class="absolute -top-1 -right-1 hidden h-8 w-8 rounded-full bg-pink-800 text-white text-base flex items-center justify-center font-bold border-2 border-white">
-                        0
-                    </span>
-                </button>
+                <!-- El botón del carrito flotante ya no está aquí -->
             </div>
         </div>
     </header>
@@ -185,6 +177,22 @@
         </div>
     </div>
 
+    <!-- Botón de WhatsApp Flotante (FAB) -->
+    <button id="whatsappFabBtn" class="fixed bottom-24 right-6 p-4 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors shadow-lg z-50" aria-label="Contactar por WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.04 2C7.06 2 3 6.03 3 11.01c0 1.73.49 3.36 1.36 4.78L3.02 21.01l5.35-1.4C9.5 20.35 10.72 21 12.04 21c4.98 0 9.01-4.03 9.01-9.01S17.02 2 12.04 2zm3.62 13.33c-.1.2-.23.23-.42.3-.17.07-.36.1-.53.1-.19 0-.36-.06-.53-.13-.97-.34-3.13-1.93-3.62-2.16-.48-.23-.8-.34-1.02-.34-.23 0-.48.17-.65.34-.17.17-.34.42-.51.6c-.17.17-.34.2-.62.06-.28-.17-1.17-.42-2.22-1.37-.85-.76-1.42-1.7-1.59-1.93-.17-.23-.02-.34.13-.48.13-.13.3-.3.42-.48.13-.17.17-.3.26-.48.09-.17.05-.34-.03-.48-.08-.17-.53-1.27-.72-1.7-.17-.42-.34-.34-.48-.34-.13 0-.28-.03-.42-.03-.13 0-.34.06-.51.23-.17.17-.65.6-.65 1.47 0 .87.67 1.7 1.02 2.16.36.48.72.97 1.17 1.4.97.97 1.83 1.63 2.7 2.16.87.53 1.59.72 2.16.72.48 0 .85-.09 1.17-.23.3-.13.62-.3.72-.48.17-.3.48-.65.65-.97.17-.34.17-.6.1-.72-.06-.13-.23-.2-.42-.3z"/>
+        </svg>
+    </button>
+
+    <!-- Botón de Carrito Flotante (FAB) -->
+    <button id="openCartBtn" class="fixed bottom-6 right-6 p-4 rounded-full bg-pink-600 text-white hover:bg-pink-700 transition-colors shadow-lg animate-pulse-attention z-50" aria-label="Abrir carrito de compras">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57L22 4H5.5"/></svg>
+        <!-- Contador de ítems en el carrito, ahora más grande y visible -->
+        <span id="cartItemCount" class="absolute -top-1 -right-1 hidden h-8 w-8 rounded-full bg-pink-800 text-white text-base flex items-center justify-center font-bold border-2 border-white">
+            0
+        </span>
+    </button>
+
     <script>
         // --- Datos de Ejemplo: Productos Bioaqua ---
         // En una aplicación real, esto vendría de una base de datos o una API.
@@ -213,7 +221,8 @@
 
         // --- Referencias a Elementos del DOM ---
         const productGrid = document.getElementById('productGrid');
-        const openCartBtn = document.getElementById('openCartBtn');
+        const openCartBtn = document.getElementById('openCartBtn'); // Ahora es el botón flotante
+        const whatsappFabBtn = document.getElementById('whatsappFabBtn'); // Nuevo botón de WhatsApp
         const closeCartBtn = document.getElementById('closeCartBtn');
         const shoppingCartSidebar = document.getElementById('shoppingCartSidebar');
         const cartOverlay = document.getElementById('cartOverlay');
@@ -523,6 +532,12 @@
                 if (e.key === 'Enter') {
                     applyCoupon(couponInput.value.toUpperCase());
                 }
+            });
+
+            // Event listener para el nuevo botón de WhatsApp
+            whatsappFabBtn.addEventListener('click', () => {
+                // Reemplaza '51987654321' con tu número de WhatsApp real (código de país + número)
+                window.open('https://wa.me/51987654321', '_blank');
             });
 
             // Inicializa el carrito vacío
