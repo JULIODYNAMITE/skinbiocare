@@ -337,7 +337,7 @@
                 imageUrl: [
                     "https://cdn.shopify.com/s/files/1/0043/2691/6163/files/2_febdc513-c6d7-44b3-bd91-3aafffb1689d.jpg?v=1630118788",
                     "https://cdn.shopify.com/s/files/1/0043/2691/6163/files/1_ac8f2e18-f8e5-4042-ab8d-b0db24c34d38.jpg?v=1630118772",
-                    "https://cdn.shopify.com/s/files/1/0043/2691/6163/files/4_932557de-7aa5-482b-abba-2de9501566cc.jpg?v=1630118817",
+                    "https://cdn.shopify.com/s/files/1/0043/2691/6163/files/4_932557de-7aa5-4488-9c20-89501162d4c3.jpg?v=1630118817",
                     "https://cdn.shopify.com/s/files/1/0043/2691/6163/files/6_39d248da-c86b-42c2-b5f0-1d24c268cfd5.jpg?v=1630118844"
                 ],
                 description: "Hidratante y suave. Ayuda a hidratar la piel seca y deshidratada. Mejora el equilibrio hidrolípido y deja la piel más atractiva. Nutre y deja la piel suave y sedosa. El sérum contiene ácido hialurónico y un complejo hidratante de ingredientes vegetales que nutren e hidratan la piel. Deja la piel fresca, hidratada y sin tirantez. Disfruta de la textura fresca y fragante de la crema. Es una crema vegana."
@@ -796,6 +796,17 @@
             updateModalImage();
             productDetailModal.classList.remove('hidden');
             overlay.classList.remove('hidden');
+
+            // Añadir una entrada al historial del navegador al abrir el modal
+            history.pushState({ modalOpen: true, productId: product.id }, '', `#product-${product.id}`);
+        }
+
+        // Esta función solo oculta el modal, no manipula el historial directamente
+        function closeProductDetailModal() {
+            productDetailModal.classList.add('hidden');
+            overlay.classList.add('hidden');
+            currentModalProduct = null;
+            currentImageIndex = 0;
         }
 
         function updateModalImage() {
@@ -862,11 +873,16 @@
             overlay.addEventListener('click', () => {
                 if (!shoppingCartSidebar.classList.contains('translate-x-full')) {
                     shoppingCartSidebar.classList.add('translate-x-full');
+                    overlay.classList.add('hidden');
                 }
-                if (!productDetailModal.classList.contains('hidden')) {
-                    productDetailModal.classList.add('hidden');
+                // Si el modal de producto está abierto, simular un "atrás" en el historial
+                else if (!productDetailModal.classList.contains('hidden')) {
+                    history.back();
                 }
-                overlay.classList.add('hidden');
+                // Si no hay nada abierto, simplemente ocultar el overlay
+                else {
+                    overlay.classList.add('hidden');
+                }
             });
 
 
@@ -897,9 +913,9 @@
             });
 
             // Event Listeners para el modal de detalles del producto
+            // Al hacer clic en el botón 'X' del modal, simular un "atrás" en el historial
             closeProductDetailModalButton.addEventListener('click', () => {
-                productDetailModal.classList.add('hidden');
-                overlay.classList.add('hidden');
+                history.back();
             });
 
             modalPrevImageBtn.addEventListener('click', showPrevModalImage);
@@ -910,8 +926,8 @@
                 const product = sampleProducts.find(p => p.id === productId);
                 if (product) {
                     addToCart(product);
-                    productDetailModal.classList.add('hidden'); // Cerrar modal después de añadir
-                    overlay.classList.add('hidden');
+                    // Después de añadir al carrito, simular un "atrás" para cerrar el modal
+                    history.back();
                 }
             });
 
@@ -919,12 +935,26 @@
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape') {
                     if (!productDetailModal.classList.contains('hidden')) {
-                        productDetailModal.classList.add('hidden');
-                        overlay.classList.add('hidden');
+                        history.back(); // Simular back para cerrar el modal de producto
                     } else if (!shoppingCartSidebar.classList.contains('translate-x-full')) {
                         shoppingCartSidebar.classList.add('translate-x-full');
                         overlay.classList.add('hidden');
                     }
+                }
+            });
+
+            // Listener para el evento popstate (botón de retroceso del navegador)
+            window.addEventListener('popstate', (event) => {
+                // Si el modal de producto está visible y el estado actual no indica que el modal debe estar abierto
+                // (o si se ha navegado completamente fuera del estado del modal)
+                if (!productDetailModal.classList.contains('hidden') && (!event.state || !event.state.modalOpen)) {
+                    closeProductDetailModal(); // Cierra el modal de la UI
+                }
+                // Si el carrito está abierto y el estado actual no indica que el modal de producto debe estar abierto
+                // (esto es para asegurar que si se navega hacia atrás desde el carrito, se cierre)
+                else if (!shoppingCartSidebar.classList.contains('translate-x-full') && (!event.state || !event.state.modalOpen)) {
+                    shoppingCartSidebar.classList.add('translate-x-full');
+                    overlay.classList.add('hidden');
                 }
             });
         });
