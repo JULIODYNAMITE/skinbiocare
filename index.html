@@ -79,6 +79,27 @@
             height: 4.5rem;
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1)); /* Sombra sutil para el logo */
         }
+
+        /* Animación para la barra de envíos */
+        @keyframes slideInDown {
+            0% { transform: translateY(-100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .animate-slide-in-down {
+            animation: slideInDown 0.5s ease-out forwards;
+        }
+
+        /* Animación para la barra de promociones (similar a slideInDown pero con un ligero retraso) */
+        @keyframes slideInDownDelayed {
+            0% { transform: translateY(-100%); opacity: 0; }
+            50% { transform: translateY(-100%); opacity: 0; } /* Retraso */
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .animate-slide-in-down-delayed {
+            animation: slideInDownDelayed 0.8s ease-out forwards;
+        }
     </style>
 </head>
 <body class="bg-purple-50 min-h-screen font-sans">
@@ -111,6 +132,22 @@
             </div>
         </div>
     </header>
+
+    <!-- Barra de Envíos a Todo el Perú -->
+    <div class="bg-pink-500 text-white text-center py-2 shadow-md animate-slide-in-down z-30 relative">
+        <p class="font-semibold text-lg md:text-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck inline-block mr-2 -mt-1"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M10 18H7l1.72-6.88A2 2 0 0 1 10 10h1.24a2 2 0 0 1 1.72 1.12L14 18Z"/><circle cx="7" cy="21" r="1"/><circle cx="17" cy="21" r="1"/><path d="M17 18h.65a2 2 0 0 0 1.82-1.12L22 12V6a2 2 0 0 0-2-2h-3"/></svg>
+            ¡Envíos a todo el Perú!
+        </p>
+    </div>
+
+    <!-- Barra de Descuentos y Promociones -->
+    <div class="bg-purple-400 text-white text-center py-2 shadow-md animate-slide-in-down-delayed z-30 relative">
+        <p class="font-semibold text-lg md:text-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag inline-block mr-2 -mt-1"><path d="M12.586 2H2v10.586A2 2 0 0 0 2.586 13L13 23.414A2 2 0 0 0 14.414 24H22a2 2 0 0 0 2-2V14.414A2 2 0 0 0 23.414 13L13 2.586A2 2 0 0 0 12.586 2Z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+            ¡Descuentos y promociones por la compra de más de un producto!
+        </p>
+    </div>
 
     <!-- Notificación Flotante -->
     <div id="notification-container" class="fixed top-20 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg text-white z-50 hidden"></div>
