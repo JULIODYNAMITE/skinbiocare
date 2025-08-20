@@ -56,7 +56,7 @@
         @keyframes pulse-whatsapp-attention {
             0% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 0 0 0px rgba(34, 197, 94, 0.7); } /* green-500 con opacidad */
             50% { transform: scale(1.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(34, 197, 94, 0); }
-            100% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 0 0 0px rgba(34, 197, 94, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 4px 6px -1-rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 0 0 0px rgba(34, 197, 94, 0.7); }
         }
 
         .animate-pulse-whatsapp-attention {
@@ -99,6 +99,14 @@
 
         .animate-slide-in-down-delayed {
             animation: slideInDownDelayed 0.8s ease-out forwards;
+        }
+        
+        /* Estilos para el modal de zoom de imagen */
+        .zoom-modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            cursor: zoom-out; /* Cambia el cursor para indicar que se puede salir */
         }
     </style>
 </head>
@@ -144,7 +152,7 @@
     <!-- Barra de Descuentos y Promociones -->
     <div class="bg-purple-400 text-white text-center py-2 shadow-md animate-slide-in-down-delayed z-30 relative">
         <p class="font-semibold text-lg md:text-xl">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag inline-block mr-2 -mt-1"><path d="M12.586 2H2v10.586A2 2 0 0 0 2.586 13L13 23.414A2 2 0 0 0 14.414 24H22a2 2 0 0 0 2-2V14.414A2 2 0 0 0 23.414 13L13 2.586A2 2 0 0 0 12.586 2Z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+            <svg xmlns="http://www.w3.org/2d00/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag inline-block mr-2 -mt-1"><path d="M12.586 2H2v10.586A2 2 0 0 0 2.586 13L13 23.414A2 2 0 0 0 14.414 24H22a2 2 0 0 0 2-2V14.414A2 2 0 0 0 23.414 13L13 2.586A2 2 0 0 0 12.586 2Z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
             ¡Descuentos y promociones por la compra de más de un producto!
         </p>
     </div>
@@ -193,7 +201,7 @@
             id="cart-button"
             class="bg-purple-600 text-white p-4 rounded-full shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-75 transition-all duration-300 ease-in-out animate-pulse-attention"
         >
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            <svg xmlns="http://www.w3.org/2d00/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
             <span id="cart-item-count" class="absolute -top-1 -right-1 block h-6 w-6 rounded-full bg-pink-600 text-white text-xs font-bold flex items-center justify-center hidden">0</span>
         </button>
     </div>
@@ -204,7 +212,7 @@
         <div class="flex justify-between items-center p-4 border-b">
             <h2 class="text-xl font-bold text-gray-800">Carrito de Compras</h2>
             <button id="close-cart-button" class="text-gray-500 hover:text-gray-800">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                <svg xmlns="http://www.w3.org/2d00/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
         </div>
 
@@ -212,7 +220,7 @@
         <div id="cart-items-container" class="flex-grow overflow-y-auto p-4">
             <!-- Los ítems del carrito se renderizarán aquí mediante JavaScript -->
             <div id="empty-cart-message" class="flex flex-col items-center justify-center h-full text-center text-gray-500 hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart mb-4"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                <svg xmlns="http://www.w3.org/2d00/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart mb-4"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                 <p class="text-lg font-medium">Tu carrito está vacío</p>
                 <p>Agrega productos para verlos aquí.</p>
             </div>
@@ -272,19 +280,20 @@
     <div id="product-detail-modal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
         <div class="relative bg-white rounded-lg p-4 max-w-4xl w-full mx-4 flex flex-col md:flex-row gap-6">
             <button id="close-product-detail-modal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                <svg xmlns="http://www.w3.org/2d00/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
 
             <!-- Columna de Imágenes -->
             <div class="w-full md:w-1/2 flex flex-col items-center justify-center relative">
-                <img id="modal-product-image" src="" alt="Product Image" class="max-w-full max-h-[60vh] object-contain rounded-md mb-2"/>
+                <!-- Se añade cursor-pointer para indicar que la imagen es clicable -->
+                <img id="modal-product-image" src="" alt="Product Image" class="max-w-full max-h-[60vh] object-contain rounded-md mb-2 cursor-pointer"/>
                 <div class="flex items-center justify-between w-full px-4">
                     <button id="modal-prev-image-btn" class="bg-gray-800/50 text-white p-2 rounded-full hover:bg-gray-800 focus:outline-none disabled:opacity-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
+                        <svg xmlns="http://www.w3.org/2d00/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
                     </button>
                     <p id="modal-image-counter" class="text-gray-700 text-sm">1/1</p>
                     <button id="modal-next-image-btn" class="bg-gray-800/50 text-white p-2 rounded-full hover:bg-gray-800 focus:outline-none disabled:opacity-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
+                        <svg xmlns="http://www.w3.org/2d00/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
                     </button>
                 </div>
             </div>
@@ -294,14 +303,23 @@
                 <div>
                     <h3 id="modal-product-name" class="text-2xl font-bold text-gray-800 mb-2"></h3>
                     <p id="modal-product-description" class="text-gray-600 text-base mb-4"></p>
-                    <p id="modal-product-price" class="text-3xl font-bold text-purple-600 mb-6"></p>
+                    <!-- Contenedor para los precios -->
+                    <div class="flex items-baseline gap-2 mb-6">
+                        <p id="modal-product-price" class="text-3xl font-bold text-purple-600"></p>
+                        <p id="modal-original-price" class="text-lg text-gray-400 line-through hidden"></p>
+                    </div>
                 </div>
                 <button id="modal-add-to-cart-btn" class="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition-colors duration-300 text-lg font-medium flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <svg xmlns="http://www.w3.org/2d00/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                     <span>Agregar al Carrito</span>
                 </button>
             </div>
         </div>
+    </div>
+    
+    <!-- NUEVO: Modal para el zoom de la imagen en pantalla completa -->
+    <div id="zoom-image-modal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 hidden" onclick="closeZoomModal()">
+        <img id="zoomed-image" src="" alt="Imagen con Zoom" class="zoom-modal-content" onclick="event.stopPropagation()"/>
     </div>
 
 
@@ -335,12 +353,12 @@
             {
                 id: '3',
                 name: "Spray Aclarante BIOAQUA V7 Hidratacion Profunda BLANQUEADOR",
-                price: 29.00, // Precio actualizado
+                price: 30.00, // ¡PRECIO ACTUALIZADO A 30.00!
                 imageUrl: [
                     "https://rimage.ripley.com.pe/home.ripley/Attachment/MKP/4171/PMP20000151674/full_image-1.jpeg",
-                    "https://oechsle.vteximg.com.br/arquivos/ids/18374712-1000-1000/imageUrl_2.jpg?v=638566881252400000",
+                    "https://oechsle.vteximg.br/arquivos/ids/18374712-1000-1000/imageUrl_2.jpg?v=638566881252400000",
                     "https://rimage.ripley.com.pe/home.ripley/Attachment/MKP/5105/PMP20000772165/full_image-1.jpeg", // Nueva imagen en la posición 3
-                    "https://oechsle.vteximg.com.br/arquivos/ids/18374715-1000-1000/imageUrl_4.jpg?v=638566881259430000"
+                    "https://oechsle.vteximg.br/arquivos/ids/18374715-1000-1000/imageUrl_4.jpg?v=638566881259430000"
                 ],
                 description: "El Spray Aclarante BIOAQUA V7 Deep Hydration es tu aliado para una piel radiante y uniforme. Este innovador spray está formulado para proporcionar una hidratación profunda mientras ayuda a aclarar y unificar el tono de la piel. Su textura ligera se absorbe rápidamente, dejando la piel fresca, luminosa y con un aspecto revitalizado. Ideal para usar en el rostro y el cuerpo, es perfecto para refrescar la piel en cualquier momento del día y mejorar su luminosidad natural. Contenido de 200ml."
             },
@@ -370,7 +388,7 @@
             {
                 id: '6',
                 name: "Crema Facial Hidratante BIOAQUA HA Hyaluronic Acid Water Get",
-                price: 35.00, // Precio actualizado
+                price: 30.00, // ¡PRECIO ACTUALIZADO!
                 imageUrl: [
                     "https://cdn.shopify.com/s/files/1/0043/2691/6163/files/2_febdc513-c6d7-44b3-bd91-3aafffb1689d.jpg?v=1630118788",
                     "https://cdn.shopify.com/s/files/1/0043/2691/6163/files/1_ac8f2e18-f8e5-4042-ab8d-b0db24c34d38.jpg?v=1630118772",
@@ -382,7 +400,7 @@
             {
                 id: '7',
                 name: "Crema Hidratante Vegana Bioaqua v7 Blanqueadora", // Título actualizado
-                price: 30.00, // Precio actualizado
+                price: 35.00, // PRECIO ACTUALIZADO A 35.00
                 imageUrl: [
                     "https://rimage.ripley.com.pe/home.ripley/Attachment/MKP/4097/PMP20000377001/imagen3-1.jpeg",
                     "https://rimage.ripley.com.pe/home.ripley/Attachment/MKP/4097/PMP20000377001/imagen2-1.jpeg",
@@ -418,7 +436,7 @@
                 price: 33.00, // Precio actualizado
                 imageUrl: [
                     "https://importacionessumak.com/cdn/shop/files/COD1111_4_e5cb38a8-eabe-4bff-bad1-5470d287251d.jpg?v=1713886048&width=1100",
-                    "https://importacionessumak.com/cdn/shop/files/COD1111_3_e8e6c80b-ca6c-4590-815e-8323852847e3.jpg?v=1713886048&width=1100",
+                    "https://importacionessumak.com/cdn/shop/files/COD1111_3_e8e6c80b-ca6c-4f1b-b96e-471299197d5c.jpg?v=1713886048&width=1100",
                     "https://importacionessumak.com/cdn/shop/files/COD1111_2_b8060d20-efc5-4f1b-b96e-471299197d5c.jpg?v=1713886048&width=1100"
                 ],
                 description: "Experimenta la hidratación definitiva con el Sérum de Ácido Hialurónico de LAIKOU, directamente desde Corea. Este potente sérum está formulado con una alta concentración de ácido hialurónico, un ingrediente clave conocido por su increíble capacidad para retener la humedad en la piel, proporcionando una hidratación profunda y duradera. Su textura ligera y de rápida absorción penetra instantáneamente, rellenando las líneas finas y arrugas, y dejando la piel visiblemente más suave, elástica y con un aspecto juvenil. Ideal para todo tipo de piel, este sérum ayuda a mejorar la barrera cutánea, proteger contra los factores ambientales y promover una tez radiante y saludable. Úsalo diariamente para revitalizar tu piel y disfrutar de un cutis fresco y revitalizado. Contenido: 17ml."
@@ -432,10 +450,20 @@
                 ],
                 description: "Revitaliza la delicada piel alrededor de tus ojos con las Mascarillas para Ojos de Sakura de BIOAQUA. Este set de 60 parches está enriquecido con extracto de flor de cerezo (Sakura), conocido por sus propiedades antioxidantes y su capacidad para iluminar y suavizar la piel. Ayudan a reducir la apariencia de ojeras, bolsas y líneas finas, dejando el contorno de ojos más firme, hidratado y radiante. Su diseño ergonómico se adapta perfectamente, permitiendo que los ingredientes activos penetren eficazmente. Disfruta de una mirada fresca y juvenil con cada aplicación. Contenido: 60 parches."
             },
+            // Nuevo producto agregado aquí
             {
-                id: '12', // Nuevo ID para el aceite de cabello
+                id: '12',
+                name: "PURE GOLD HYALURONIC ESSENCE 30ML BIOAQUA",
+                price: 22.00,
+                imageUrl: ["https://media.falabella.com/falabellaPE/144008142_01/w=1500,h=1500,fit=pad", "https://media.falabella.com/falabellaPE/144008142_02/w=1500,h=1500,fit=pad", "https://i.postimg.cc/SQDLjtSf/HYALURONIC-ESSENCE.jpg"],
+                description: "El PURE GOLD HYALURONIC ESSENCE de BIOAQUA es un lujoso sérum facial de 30ml diseñado para revitalizar y rejuvenecer la piel. Su fórmula avanzada combina el poder del ácido hialurónico, un hidratante intensivo que retiene la humedad para una piel más rellena y suave, con micropartículas de oro puro, que aportan un resplandor instantáneo y mejoran la elasticidad. Este elixir ayuda a reducir visiblemente las líneas finas y arrugas, unificar el tono de la piel y protegerla contra los factores ambientales. La textura ligera y de rápida absorción lo hace ideal para todo tipo de piel, dejando un acabado luminoso y no graso. Con el uso regular, tu piel se sentirá más firme, radiante y visiblemente más joven."
+            },
+            {
+                id: '13', // Nuevo ID para el aceite de cabello (desplazado)
                 name: "ACEITE PARA EL CABELLO DE MOROCCO BIOAQUA 100ML",
-                price: 35.00, // Precio actualizado
+                price: 24.00, // PRECIO CON DESCUENTO
+                originalPrice: 35.00, // PRECIO ORIGINAL
+                discountPercentage: 31, // PORCENTAJE DE DESCUENTO
                 imageUrl: [
                     "https://rimage.ripley.com.pe/home.ripley/Attachment/MKP/4789/PMP20000878539/full_image-1.jpeg",
                     "https://rimage.ripley.com.pe/home.ripley/Attachment/MKP/4789/PMP20000878539/imagen2-1.jpeg"
@@ -443,19 +471,23 @@
                 description: "Transforma tu cabello con el ACEITE PARA EL CABELLO DE MOROCCO de BIOAQUA, un elixir de belleza de 100ml diseñado para nutrir, reparar y revitalizar profundamente tu melena. Enriquecido con los beneficios del aceite de argán (conocido como 'oro líquido de Marruecos'), este tratamiento capilar es ideal para todo tipo de cabello, especialmente para aquellos secos, dañados o con frizz. Su fórmula ligera y no grasa se absorbe rápidamente, aportando brillo, suavidad y manejabilidad sin apelmazar. Ayuda a fortalecer las fibras capilares, reducir las puntas abiertas y proteger el cabello del daño causado por el calor y los factores ambientales. Con cada aplicación, tu cabello lucirá más saludable, sedoso y radiante, con un aroma delicado y exótico. Modo de uso: Aplica una pequeña cantidad sobre el cabello húmedo o seco, distribuyendo de medios a puntas. No enjuagar. Úsalo antes del peinado o como toque final para un brillo extra."
             },
             {
-                id: '13', // Nuevo ID para la mascarilla de jengibre
+                id: '14', // Nuevo ID para la mascarilla de jengibre (desplazado)
                 name: "MASCARILLA DE JENGIBRE PARA EL CABELLO - BIOAQUA",
-                price: 32.00, // Precio actualizado
+                price: 22.00, // PRECIO CON DESCUENTO
+                originalPrice: 32.00, // PRECIO ORIGINAL
+                discountPercentage: 31, // PORCENTAJE DE DESCUENTO
                 imageUrl: [
                     "https://rimage.ripley.com.pe/home.ripley/Attachment/MKP/5521/PMP20000758112/imagen2-1.jpeg",
                     "https://rimage.ripley.com.pe/home.ripley/Attachment/MKP/5521/PMP20000758112/full_image-1.jpeg"
                 ],
-                description: "Revitaliza y fortalece tu cabello con la MASCARILLA DE JENGIBRE PARA EL CABELLO de BIOAQUA. Esta mascarilla intensiva, formulada con extracto de jengibre, es ideal para estimular el crecimiento del cabello, fortalecer las raíces y mejorar la circulación en el cuero cabelludo. El jengibre es conocido por sus propiedades antioxidantes y antiinflamatorias, que ayudan a mantener un cuero cabelludo sano y libre de caspa. Además, su fórmula nutritiva hidrata profundamente el cabello, dejándolo suave, brillante y más resistente a la rotura. Disfruta de un cabello con más volumen, vitalidad y un aspecto visiblemente más saludable. Perfecta para cabellos débiles, finos o con tendencia a la caída. Contenido: 500g."
+                description: "Revitaliza y fortalece tu cabello con la MASCARILLA DE JENGIBRE PARA EL CABELLO de BIOAQUA. Esta mascarilla intensiva, formulada con extracto de jengibre, es ideal para estimular el crecimiento del cabello, fortalecer las raíces y mejorar la circulación en el cuero cabelludo. El jengibre es conocido por sus propiedades antioxidantes y antiinflamatorias, que ayudan a mantener un cuero cabelludo sano y libre de caspa. Además, su fórmula nutritiva hidrata profundamente el cabello, dejando un acabado suave, brillante y más resistente a la rotura. Disfruta de un cabello con más volumen, vitalidad y un aspecto visiblemente más saludable. Perfecta para cabellos débiles, finos o con tendencia a la caída. Contenido: 500g."
             },
             {
-                id: '14', // Nuevo ID para la mascarilla de olivo
+                id: '15', // Nuevo ID para la mascarilla de olivo (desplazado)
                 name: "Mascarilla de Olivo para el Cabello 500g - Bioaqua",
-                price: 32.00, // Precio actualizado
+                price: 22.00, // PRECIO CON DESCUENTO
+                originalPrice: 32.00, // PRECIO ORIGINAL
+                discountPercentage: 31, // PORCENTAJE DE DESCUENTO
                 imageUrl: [
                     "https://importacionessumak.com/cdn/shop/files/BIO58-3_6d85b2bd-12ae-4165-bfa2-27914050e2a2.jpg?v=1739626773&width=1100",
                     "https://rimage.ripley.com.pe/home.ripley/Attachment/MKP/5521/PMP20000758095/full_image-1.jpeg"
@@ -488,7 +520,7 @@
         const closeCartButton = document.getElementById('close-cart-button');
         const overlay = document.getElementById('overlay'); // Un solo overlay para ambos modales
         const cartItemsContainer = document.getElementById('cart-items-container');
-        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const emptyCartMessage = document.getElementById('cart-items-container');
         const cartFooter = document.getElementById('cart-footer');
         const couponInput = document.getElementById('coupon-input');
         const applyCouponButton = document.getElementById('apply-coupon-button');
@@ -506,11 +538,16 @@
         const modalProductName = document.getElementById('modal-product-name');
         const modalProductDescription = document.getElementById('modal-product-description');
         const modalProductPrice = document.getElementById('modal-product-price');
+        const modalOriginalPrice = document.getElementById('modal-original-price'); // Nuevo elemento para el precio original
         const modalProductImage = document.getElementById('modal-product-image');
         const modalImageCounter = document.getElementById('modal-image-counter');
         const modalPrevImageBtn = document.getElementById('modal-prev-image-btn');
         const modalNextImageBtn = document.getElementById('modal-next-image-btn');
         const modalAddToCartBtn = document.getElementById('modal-add-to-cart-btn');
+
+        // NUEVO: Referencias para el modal de zoom de imagen
+        const zoomImageModal = document.getElementById('zoom-image-modal');
+        const zoomedImage = document.getElementById('zoomed-image');
 
 
         // Función para mostrar notificaciones
@@ -586,18 +623,18 @@
                             <p class="text-purple-600 text-xs">S/ ${item.price.toFixed(2)}</p>
                             <div class="flex items-center gap-2 mt-1">
                                 <button data-id="${item.id}" data-action="decrease" class="p-1 rounded-full border hover:bg-gray-100 disabled:opacity-50" ${item.quantity <= 1 ? 'disabled' : ''}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus"><path d="M5 12h14"/></svg>
+                                    <svg xmlns="http://www.w3.org/2d00/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus"><path d="M5 12h14"/></svg>
                                 </button>
                                 <span class="text-sm font-medium">${item.quantity}</span>
                                 <button data-id="${item.id}" data-action="increase" class="p-1 rounded-full border hover:bg-gray-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+                                    <svg xmlns="http://www.w3.org/2d00/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
                                 </button>
                             </div>
                         </div>
                         <div class="flex flex-col items-end">
                             <p class="font-bold text-base">S/ ${(item.price * item.quantity).toFixed(2)}</p>
                             <button data-id="${item.id}" data-action="remove" class="text-gray-400 hover:text-red-500 mt-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                                <svg xmlns="http://www.w3.org/2d00/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
                             </button>
                         </div>
                     `;
@@ -719,6 +756,18 @@
                 // Truncar la descripción para la vista principal
                 const abbreviatedDescription = truncateDescription(product.description, 100); // Límite de 100 caracteres
 
+                let priceHtml = `<p class="text-xl font-bold text-purple-600">S/ ${product.price.toFixed(2)}</p>`;
+                if (product.originalPrice) {
+                    priceHtml = `
+                        <div class="flex items-baseline gap-2">
+                            <p class="text-xl font-bold text-purple-600">S/ ${product.price.toFixed(2)}</p>
+                            <p class="text-sm text-gray-400 line-through">S/ ${product.originalPrice.toFixed(2)}</p>
+                            <span class="bg-pink-500 text-white text-xs font-semibold px-2 py-1 rounded-full -rotate-6">-${product.discountPercentage}%</span>
+                        </div>
+                    `;
+                }
+
+
                 productCard.innerHTML = `
                     <div class="overflow-hidden">
                         <img
@@ -732,15 +781,15 @@
                         <h3 class="text-lg font-semibold text-gray-800 mb-2 truncate">${product.name}</h3>
                         <p class="text-sm text-gray-500 mb-4 flex-grow">${abbreviatedDescription}</p>
                         <div class="flex justify-between items-center mt-auto">
-                            <p class="text-xl font-bold text-purple-600">S/ ${product.price.toFixed(2)}</p>
+                            ${priceHtml}
                             <button data-product-id="${product.id}" class="add-to-cart-btn bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-colors duration-300 text-sm font-medium flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                                <svg xmlns="http://www.w3.org/2d00/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                                 <span>Agregar</span>
                             </button>
                         </div>
                         <!-- Botón de Recomendación LLM -->
                         <button data-product-id="${product.id}" class="get-llm-recommendation-btn bg-purple-500 text-white px-3 py-1 rounded-lg hover:bg-purple-600 transition-colors duration-300 text-xs font-medium flex items-center justify-center gap-1 mt-3 w-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-3 3a5 5 0 0 0-.54 7.54Z"/><path d="M14 11a2 2 0 0 0-3-3l-3 3a2 2 0 0 0 3 3z"/><path d="M22 2L19 5"/><path d="M18 6L21 9"/></svg>
+                            <svg xmlns="http://www.w3.org/2d00/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-3 3a5 5 0 0 0-.54 7.54Z"/><path d="M14 11a2 2 0 0 0-3-3l-3 3a2 2 0 0 0 3 3z"/><path d="M22 2L19 5"/><path d="M18 6L21 9"/></svg>
                             <span>Obtener Recomendación</span>
                         </button>
                         <div id="recommendation-${product.id}" class="mt-2 text-sm text-gray-700 bg-purple-50 p-2 rounded-md border border-purple-200 hidden">
@@ -782,7 +831,7 @@
                         recommendationTextSpan.textContent = recommendation;
                         recommendationDiv.classList.remove('hidden');
                         event.currentTarget.disabled = false;
-                        event.currentTarget.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-3 3a5 5 0 0 0-.54 7.54Z"/><path d="M14 11a2 2 0 0 0-3-3l-3 3a2 2 0 0 0 3 3z"/><path d="M22 2L19 5"/><path d="M18 6L21 9"/></svg><span>Obtener Recomendación</span>`;
+                        event.currentTarget.innerHTML = `<svg xmlns="http://www.w3.org/2d00/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-3 3a5 5 0 0 0-.54 7.54Z"/><path d="M14 11a2 2 0 0 0-3-3l-3 3a2 2 0 0 0 3 3z"/><path d="M22 2L19 5"/><path d="M18 6L21 9"/></svg><span>Obtener Recomendación</span>`;
                     }
                 });
             });
@@ -829,6 +878,14 @@
             modalProductDescription.textContent = product.description; // Descripción completa en el modal
             modalProductPrice.textContent = `S/ ${product.price.toFixed(2)}`;
             modalAddToCartBtn.dataset.productId = product.id; // Asociar el ID del producto al botón
+
+            // Manejar la visualización del precio original
+            if (product.originalPrice) {
+                modalOriginalPrice.textContent = `S/ ${product.originalPrice.toFixed(2)}`;
+                modalOriginalPrice.classList.remove('hidden');
+            } else {
+                modalOriginalPrice.classList.add('hidden');
+            }
 
             updateModalImage();
             productDetailModal.classList.remove('hidden');
@@ -888,6 +945,18 @@
                 currentImageIndex--;
                 updateModalImage();
             }
+        }
+
+        // NUEVO: Funciones para el modal de zoom de imagen
+        function openZoomModal(imageUrl) {
+            zoomedImage.src = imageUrl;
+            zoomImageModal.classList.remove('hidden');
+            // Al abrir el modal de zoom, añadir un estado al historial para el botón "atrás"
+            history.pushState({ modalOpen: 'zoom' }, '', `#zoom`);
+        }
+
+        function closeZoomModal() {
+            zoomImageModal.classList.add('hidden');
         }
 
         // Event Listeners
@@ -954,6 +1023,14 @@
             closeProductDetailModalButton.addEventListener('click', () => {
                 history.back();
             });
+            
+            // NUEVO: Event listener para abrir el modal de zoom al hacer clic en la imagen
+            modalProductImage.addEventListener('click', () => {
+                if(currentModalProduct && currentModalProduct.imageUrl.length > 0) {
+                    const currentImageUrl = currentModalProduct.imageUrl[currentImageIndex];
+                    openZoomModal(currentImageUrl);
+                }
+            });
 
             modalPrevImageBtn.addEventListener('click', showPrevModalImage);
             modalNextImageBtn.addEventListener('click', showNextModalImage);
@@ -971,7 +1048,9 @@
             // Cerrar modales con la tecla ESC
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape') {
-                    if (!productDetailModal.classList.contains('hidden')) {
+                    if (!zoomImageModal.classList.contains('hidden')) {
+                        history.back(); // Simular back para cerrar el modal de zoom
+                    } else if (!productDetailModal.classList.contains('hidden')) {
                         history.back(); // Simular back para cerrar el modal de producto
                     } else if (!shoppingCartSidebar.classList.contains('translate-x-full')) {
                         shoppingCartSidebar.classList.add('translate-x-full');
@@ -982,14 +1061,15 @@
 
             // Listener para el evento popstate (botón de retroceso del navegador)
             window.addEventListener('popstate', (event) => {
-                // Si el modal de producto está visible y el estado actual no indica que el modal debe estar abierto
-                // (o si se ha navegado completamente fuera del estado del modal)
-                if (!productDetailModal.classList.contains('hidden') && (!event.state || !event.state.modalOpen)) {
-                    closeProductDetailModal(); // Cierra el modal de la UI
-                }
-                // Si el carrito está abierto y el estado actual no indica que el modal de producto debe estar abierto
-                // (esto es para asegurar que si se navega hacia atrás desde el carrito, se cierre)
-                else if (!shoppingCartSidebar.classList.contains('translate-x-full') && (!event.state || !event.state.modalOpen)) {
+                // Comprobar si un modal específico estaba abierto antes de cerrar
+                if (zoomImageModal.classList.contains('hidden') === false) {
+                    // Si el modal de zoom está abierto, cerrarlo
+                    closeZoomModal();
+                } else if (!productDetailModal.classList.contains('hidden')) {
+                    // Si el modal de detalles está abierto, cerrarlo
+                    closeProductDetailModal();
+                } else if (!shoppingCartSidebar.classList.contains('translate-x-full')) {
+                    // Si el carrito está abierto, cerrarlo
                     shoppingCartSidebar.classList.add('translate-x-full');
                     overlay.classList.add('hidden');
                 }
